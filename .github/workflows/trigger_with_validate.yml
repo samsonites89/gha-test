@@ -1,0 +1,16 @@
+name: deploy to node
+
+on:
+  workflow_run:
+    workflows: [Staging, Lab]
+    types:
+      - completed
+
+
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step 2
+        run: echo "SUCCESSFUL"
+ 
