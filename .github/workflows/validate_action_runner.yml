@@ -5,12 +5,26 @@ permissions:
 
 on:
   workflow_dispatch:
-
+    inputs:
+      environment:
+        description: Choose an environment
+        type: choice
+        default: qa
+        options:
+          - qa
+          - pr
+          - rc
+          - st
+          - demo
+          - prod
 jobs:
   validate-action-runner:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
     steps:
       - name: print action runner
+        if: ${{ inputs.environment == 'prod' }}
         run: |
           echo "Verifying Action Runner"
           result=`gh api /orgs/UJET/teams/ujet-role-sdk-release-managers/memberships/${GITHUB_ACTOR} | jq -r 'select(.state=="active")'`
@@ -22,3 +36,7 @@ jobs:
           fi
 
           echo "User $GITHUB_ACTOR is not allowed to run this GHA"
+          exit 1
+      - name: step 2
+        run: echo "SUCCESSFUL"
+  
