@@ -1,6 +1,16 @@
 name: Validate Github Action Runner
 
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+
 jobs:
-  validatedarte-action-runner:
+  validate-action-runner:
     runs-on: ubuntu-latest
-    run: echo $GITHUB_ACTOR
+    steps:
+      - name: print action runner
+        run: echo $GITHUB_ACTOR
+
+
