@@ -2,9 +2,10 @@ name: deploy to node
 
 on:
   workflow_run:
-    workflows: [Staging, Lab]
+    workflows: [Validate]
     types:
       - completed
+    branches: [main]
 
 
 jobs:

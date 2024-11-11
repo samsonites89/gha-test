@@ -1,4 +1,4 @@
-name: Validate Github Action Runner
+name: Validate
 
 permissions:
   contents: write
