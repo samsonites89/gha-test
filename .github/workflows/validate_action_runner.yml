@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: print action runner
-        run: echo $GITHUB_ACTOR
+        run: |
+          echo "Verifying Action Runner"
+          result=`gh api /orgs/UJET/teams/ujet-role-sdk-release-managers/memberships/${GITHUB_ACTOR} | jq -r 'select(.state=="active")'`
 
+          if [[ "$result" != "" ]]
+          then
+            echo "User $GITHUB_ACTOR is part of the ujet-role-sdk-release-managers group"
+            exit 0
+          fi
 
+          echo "User $GITHUB_ACTOR is not allowed to run this GHA"
