@@ -1,0 +1,6 @@
+name: Validate Github Action Runner
+
+jobs:
+  validatedarte-action-runner:
+    runs-on: ubuntu-latest
+    run: echo $GITHUB_ACTOR
