@@ -19,15 +19,13 @@ on:
           - prod
 jobs:
   validate-action-runner:
+    uses: ./.github/workflows/validate_action_runner.yml
+    with:
+      environment: ${{ inputs.environment }}
+
+  second-step:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-
     steps:
-      - name: Validation
-        uses: ./.github/workflows/validate_action_runner.yml
-        with:
-          environment: ${{ inputs.environment }}
-
       - name: second step
         run: |
           echo "This is the second step"
