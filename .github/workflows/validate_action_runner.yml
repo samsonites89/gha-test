@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: print action runner
+      - name: validate action runner
         if: ${{ inputs.environment == 'prod' }}
         run: |
           echo "Verifying Action Runner"

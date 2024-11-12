@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Validation
-        uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
+        uses: ./.github/workflows/validate_action_runner.yml
         with:
           environment: ${{ inputs.environment }}
 
