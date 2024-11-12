@@ -24,6 +24,7 @@ jobs:
       environment: ${{ inputs.environment }}
 
   second-step:
+    needs: [validate-action-runner]
     runs-on: ubuntu-latest
     steps:
       - name: second step
