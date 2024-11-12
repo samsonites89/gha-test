@@ -27,4 +27,4 @@ jobs:
           fi
 
           echo "User $GITHUB_ACTOR is not allowed to run this GHA"
-          exit 0
+          exit 1
