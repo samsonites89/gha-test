@@ -1,0 +1,33 @@
+name: Dummy
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Choose an environment
+        type: choice
+        default: qa
+        options:
+          - qa
+          - pr
+          - rc
+          - st
+          - demo
+          - prod
+jobs:
+  validate-action-runner:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Validation
+        uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
+        with:
+          environment: ${{ inputs.environment }}
+
+      - name: second step
+        run: |
+          echo "This is the second step"

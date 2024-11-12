@@ -4,23 +4,14 @@ permissions:
   contents: write
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       environment:
-        description: Choose an environment
-        type: choice
-        default: qa
-        options:
-          - qa
-          - pr
-          - rc
-          - st
-          - demo
-          - prod
+        required: true
+        type: string
 jobs:
   validate-action-runner:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
 
     steps:
       - name: print action runner
