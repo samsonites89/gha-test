@@ -1,32 +1,41 @@
-name: Dummy
+name: Release Cut
 
 permissions:
   contents: write
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: Choose an environment
-        type: choice
-        default: qa
-        options:
-          - qa
-          - pr
-          - rc
-          - st
-          - demo
-          - prod
-jobs:
-  validate-action-runner:
-    uses: ./.github/workflows/validate_action_runner.yml
-    with:
-      environment: ${{ inputs.environment }}
 
-  second-step:
-    needs: [validate-action-runner]
+jobs:
+  release:
+    name: Release Cut
     runs-on: ubuntu-latest
+
     steps:
-      - name: second step
+      - uses: actions/checkout@v4
+          token: ${{ secrets.PA_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Bump version
         run: |
-          echo "This is the second step"
+          node scripts/release-cut.js ${{ github.ref_name }}
+          version=$(node -e "console.log(require('./package.json').version)")
+          git add .
+          git commit -m "Release v$version"
+          git tag v$version
+          git push origin v$version
+
+      - name: Create release branch
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          version=$(node -e "console.log(require('./package.json').version)")
+          git branch release/${version%.*}
+          git push origin release/${version%.*}
+
+      - name: Update release branch
+        if: ${{ startsWith(github.ref_name, 'release') }}
+        run: |
+          version=$(node -e "console.log(require('./package.json').version)")
+          git push origin release/${version%.*}

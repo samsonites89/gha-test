@@ -1,8 +1,5 @@
 name: Validate
 
-permissions:
-  contents: write
-
 on:
   workflow_call:
     inputs:
