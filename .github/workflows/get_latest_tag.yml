@@ -1,0 +1,17 @@
+name: Latest Tag test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Release Cut
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure github
+        run: |
+          echo "fetching latest tag"
+          tag="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
+          echo $tag
