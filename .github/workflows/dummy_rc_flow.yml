@@ -8,9 +8,9 @@ on:
 
 jobs:
   validate:
-      uses: ./.github/workflows/validate_action_runner.yml
-      with:
-        environment: "prod"
+    uses: ./.github/workflows/validate_action_runner.yml
+    with:
+      environment: "prod"
 
   release:
     needs: validate
