@@ -58,5 +58,4 @@ jobs:
       - name: Update release branch
         if: ${{ startsWith(github.ref_name, 'release') }}
         run: |
-          version=$(node -e "console.log(require('./package.json').version)")
           git push origin release/${$VERSION%.*}
