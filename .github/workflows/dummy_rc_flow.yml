@@ -36,7 +36,7 @@ jobs:
           TAG_VALUE="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
           echo "TAG=$TAG_VALUE" >> $GITHUB_ENV
 
-      - name: Bump version
+      - name: Bump version and create Tag
         run: |
           echo "fetched version tag is $TAG"    
 
@@ -47,15 +47,16 @@ jobs:
           git tag v$version
           git push origin v$version
 
+          echo "VERSION=$version" >> $GITHUB_ENV
+
       - name: Create release branch
         if: ${{ github.ref_name == 'main' }}
         run: |
-          version=$(node -e "console.log(require('./package.json').version)")
-          git branch release/${version%.*}
-          git push origin release/${version%.*}
+          git branch release/${$VERSION%.*}
+          git push origin release/${$VERSION%.*}
 
       - name: Update release branch
         if: ${{ startsWith(github.ref_name, 'release') }}
         run: |
           version=$(node -e "console.log(require('./package.json').version)")
-          git push origin release/${version%.*}
+          git push origin release/${$VERSION%.*}
