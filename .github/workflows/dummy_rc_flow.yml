@@ -38,7 +38,9 @@ jobs:
 
       - name: Bump version
         run: |
-          node scripts/release-cut.js ${{ github.ref_name }} ${{steps.version.outputs.TAG }}
+          echo "fetched version tag is ${{ steps.version.outputs.TAG }}"    
+
+          node scripts/release-cut.js ${{ github.ref_name }} ${{ steps.version.outputs.TAG }}
           version=$(node -e "console.log(require('./package.json').version)")
           git add .
           git commit -m "Release v$version"
