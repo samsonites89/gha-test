@@ -52,10 +52,10 @@ jobs:
       - name: Create release branch
         if: ${{ github.ref_name == 'main' }}
         run: |
-          git branch release/${$VERSION%.*}
-          git push origin release/${$VERSION%.*}
+          git branch release/${VERSION%.*}
+          git push origin release/${VERSION%.*}
 
       - name: Update release branch
         if: ${{ startsWith(github.ref_name, 'release') }}
         run: |
-          git push origin release/${$VERSION%.*}
+          git push origin release/${VERSION%.*}
