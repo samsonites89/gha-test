@@ -18,7 +18,7 @@ jobs:
           git tag -l --sort=-v:refname
 
           TAG="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
-          echo $TAG
+          echo "TAG=$TAG"
         id: version
 
       - name: print tag
