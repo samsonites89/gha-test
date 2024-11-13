@@ -7,6 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
+  uses: ./.github/workflows/validate_action_runner.yml
+  with:
+    environment: "prod"
+
   release:
     name: Release Cut
     runs-on: ubuntu-latest
