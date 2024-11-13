@@ -7,17 +7,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  uses: ./.github/workflows/validate_action_runner.yml
-  with:
-    environment: "prod"
+
+  validate:
+    name: Validation
+    runs-on: ubuntu-latests
+    steps:
+      - uses: ./.github/workflows/validate_action_runner.yml
+        with:
+          environment: "prod"
 
   release:
+    needs: validate
     name: Release Cut
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-          token: ${{ secrets.PA_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
