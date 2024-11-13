@@ -1,5 +1,7 @@
 import fs from 'fs/promises'
 
+const SDK_VERSION_HEADER = '3';
+
 /**
  * @param {string} filePath
  * @returns {Promise<Record<string, any>}
@@ -15,6 +17,7 @@ async function loadPackage (filePath) {
  */
 function bumpVersion (version, major) {
   const numbers = version.split('.')
+  numbers[0] = SDK_VERSION_HEADER; // for SDK, all version should start with 3
   let index = major ? 1 : 2
   numbers[index] = (Number(numbers[index]) + 1).toString()
   if (major) {

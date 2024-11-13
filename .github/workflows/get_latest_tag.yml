@@ -13,7 +13,12 @@ jobs:
       - name: Fetch tags
         run: git fetch --tags
 
+      - name: get tag
+        run: |
+          TAG="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
+        id: version
+
       - name: print tag
         run: |
-          tag="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
-          echo $tag
+          echo ${{ steps.version.outputs.TAG }}
+      
