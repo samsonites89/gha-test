@@ -39,10 +39,11 @@ async function updateVersion (filePath, version) {
 
 /**
  * @param {boolean} major
+ * @param {string}} tagVersion
  */
-async function updatePackages (major, version) {
+async function updatePackages (major, tagVersion) {
   const pkg = await loadPackage('./package.json')
-  const version = bumpVersion(version ? version : pkg.version, major)
+  const version = bumpVersion(tagVersion ? tagVersion : pkg.version, major)
   console.log('Bump version:', version)
   await updateVersion('./package.json', version)
 
