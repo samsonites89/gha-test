@@ -40,9 +40,9 @@ async function updateVersion (filePath, version) {
 /**
  * @param {boolean} major
  */
-async function updatePackages (major) {
+async function updatePackages (major, version) {
   const pkg = await loadPackage('./package.json')
-  const version = bumpVersion(pkg.version, major)
+  const version = bumpVersion(version ? version : pkg.version, major)
   console.log('Bump version:', version)
   await updateVersion('./package.json', version)
 
@@ -52,4 +52,4 @@ async function updatePackages (major) {
   }
 }
 
-updatePackages(process.argv[2] === 'main')
+updatePackages(process.argv[2] === 'main', process.argv[3])

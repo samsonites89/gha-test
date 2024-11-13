@@ -28,9 +28,16 @@ jobs:
           git config user.email "samuel.son@google.com"
           git config user.name "smsonites"
 
+      - name: Get latest tag
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          git fetch --tags
+          TAG="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
+        id: version
+
       - name: Bump version
         run: |
-          node scripts/release-cut.js ${{ github.ref_name }}
+          node scripts/release-cut.js ${{ github.ref_name }} ${{steps.version.outputs.TAG }}
           version=$(node -e "console.log(require('./package.json').version)")
           git add .
           git commit -m "Release v$version"
