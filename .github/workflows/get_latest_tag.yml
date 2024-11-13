@@ -10,12 +10,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Configure github
+      - name: Fetch tags
+        run: git fetch --tags
+
+      - name: print tag
         run: |
-          git fetch
-
-          git tag
-
-          echo "fetching latest tag"
           tag="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
           echo $tag
