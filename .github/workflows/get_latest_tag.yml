@@ -19,7 +19,6 @@ jobs:
 
           TAG_VALUE="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
           echo "TAG=$TAG_VALUE" >> $GITHUB_ENV
-        id: version
 
       - name: print tag
         run: |
