@@ -1,6 +1,6 @@
 {
-    "name": "@ujet/websdk-one",
-    "private": true,
-    "type": "module",
-    "version": "0.0.0"
-}  
+  "name": "@ujet/websdk-one",
+  "private": true,
+  "type": "module",
+  "version": "3.3.0"
+}
