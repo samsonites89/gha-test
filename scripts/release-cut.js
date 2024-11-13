@@ -16,6 +16,7 @@ async function loadPackage (filePath) {
  * @param {boolean} major
  */
 function bumpVersion (version, major) {
+  console.log("version received: " + version)
   const numbers = version.split('.')
   numbers[0] = SDK_VERSION_HEADER; // for SDK, all version should start with 3
   let index = major ? 1 : 2
