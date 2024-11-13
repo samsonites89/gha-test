@@ -23,6 +23,11 @@ jobs:
         with:
           node-version: 20
 
+      - name: Configure github
+        run: |
+          git config user.email "samuel.son@google.com"
+          git config user.name "smsonites"
+
       - name: Bump version
         run: |
           node scripts/release-cut.js ${{ github.ref_name }}
