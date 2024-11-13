@@ -40,7 +40,7 @@ async function updateVersion (filePath, version) {
 
 /**
  * @param {boolean} major
- * @param {string}} tagVersion
+ * @param {string} tagVersion
  */
 async function updatePackages (major, tagVersion) {
   const pkg = await loadPackage('./package.json')

@@ -33,7 +33,6 @@ jobs:
         run: |
           git fetch --tags
           TAG="$(git tag -l --sort=-v:refname | head -n 1 | cut -c2- )"
-          echo "latest version tag is $TAG"
         id: version
 
       - name: Bump version
