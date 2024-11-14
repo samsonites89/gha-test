@@ -23,6 +23,13 @@ jobs:
         with:
           node-version: 20
 
+
+      - name: Check branch for release cut
+        if: ${{ github.ref_name != 'main' || !startsWith(github.ref_name, 'release') }}
+        run: |
+          echo "branch ${{ github.ref_name }} cannot be used for release cut
+          exit 1
+
       - name: Configure github
         run: |
           git config user.email "samuel.son@google.com"
