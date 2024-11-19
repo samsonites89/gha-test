@@ -14,10 +14,8 @@ on:
 jobs:
   validate-action-runner:
     runs-on: ubuntu-latest
-
-
-
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}
 
     steps:
       - name: validate action runner
@@ -35,5 +33,3 @@ jobs:
 
           echo "User $GITHUB_ACTOR is not allowed to run this GHA"
           exit 1
-        env:
-          GH_TOKEN: ${{ secrets.PA_TOKEN }}
