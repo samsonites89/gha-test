@@ -1,6 +1,7 @@
 name: Validate
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       environment:
@@ -16,9 +17,9 @@ jobs:
         run: |
           echo "Verifying Action Runner"
           result=`gh api /orgs/UJET/teams/ujet-role-sdk-release-managers/memberships/${GITHUB_ACTOR} | jq -r 'select(.state=="active")'`
+          echo $result
 
-          # this should be flipped around
-          if [[ "$result" == "" ]]
+          if [[ "$result" != "" ]]
           then
             echo "User $GITHUB_ACTOR is part of the ujet-role-sdk-release-managers group"
             exit 0
