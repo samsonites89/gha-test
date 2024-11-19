@@ -36,4 +36,4 @@ jobs:
           echo "User $GITHUB_ACTOR is not allowed to run this GHA"
           exit 1
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PA_TOKEN }}
