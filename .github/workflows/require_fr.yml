@@ -10,7 +10,6 @@ on:
 jobs:
   checklist:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     steps:
       - uses: mheap/require-checklist-action@v2
         with:
