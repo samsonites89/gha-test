@@ -15,17 +15,16 @@ jobs:
         id: check_branch
         run: |
           echo "Checking to see if branch exists"
+          echo "Ref name: ${{ github.ref_name }}"
           result=`gh api /repos/samsonites89/gha-test/branches/${{ github.ref_name }}`
           if [[ "$result" != "" ]]
           then
             echo "Branch ${{ github.ref_name }} exists"
             echo "::set-output name=branch_exists::true"
-            exit 0
           fi
 
           echo "Branch ${{ github.ref_name }} does not exist"
           echo "::set-output name=branch_exists::false"
-          exit 1
         env:
           GH_TOKEN: ${{ secrets.PA_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
