@@ -13,16 +13,25 @@ jobs:
     steps:
       - name: Check if branch exists
         id: check_branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const branchName = context.payload.pull_request.head.ref;
-            const { data: branches } = await github.repos.listBranches({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            });
-            return branches.some(branch => branch.name === branchName);
+        run: |
+          echo "Checking to see if branch exists"
+          result=`gh api /repos/samsonites89/gha-test/branches/${{ github.ref_name }}`
+          if [[ "$result" != "" ]]
+          then
+            echo "Branch ${{ github.ref_name }} exists"
+            echo "::set-output name=branch_exists::true"
+            exit 0
+          fi
+
+          echo "Branch ${{ github.ref_name }} does not exist"
+          echo "::set-output name=branch_exists::false"
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.PA_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+
       - uses: mheap/require-checklist-action@v2
-        if: ${{ !startsWith(github.head_ref, 'merge/') && github.event.pull_request.head.repo.full_name == github.repository }}
+        name: Require FR Checklist
+        if: ${{ steps.check_branch.outputs.branch_exists == 'true' && !startsWith(github.head_ref, 'merge/') }}
         with:
           requireChecklist: true
