@@ -11,7 +11,18 @@ jobs:
   checklist:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if branch exists
+        id: check_branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const branchName = context.payload.pull_request.head.ref;
+            const { data: branches } = await github.repos.listBranches({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            return branches.some(branch => branch.name === branchName);
       - uses: mheap/require-checklist-action@v2
-        if: ${{ !startsWith(github.head_ref, 'merge/') && !github.event.pull_request.head.repo.branches.includes(github.head_ref) }}
+        if: ${{ !startsWith(github.head_ref, 'merge/') && github.event.pull_request.head.repo.full_name == github.repository }}
         with:
           requireChecklist: true
