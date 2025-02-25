@@ -13,7 +13,7 @@ jobs:
   #     environment: "prod"
 
   release:
-    needs: validate
+#    needs: validate
     name: Release Cut
     runs-on: ubuntu-latest
 

@@ -15,7 +15,7 @@ jobs:
   validate-action-runner:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}
+      GITHUB_TOKEN: ${{ github.token }}
 
     steps:
       - name: validate action runner
