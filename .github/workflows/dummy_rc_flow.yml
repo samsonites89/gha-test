@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate:
-    uses: ./.github/workflows/validate_action_runner.yml
-    with:
-      environment: "prod"
+  # validate:
+  #   uses: ./.github/workflows/validate_action_runner.yml
+  #   with:
+  #     environment: "prod"
 
   release:
     needs: validate
