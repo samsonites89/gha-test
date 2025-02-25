@@ -11,7 +11,29 @@ jobs:
   checklist:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          echo "Checking to see if branch exists"
+          echo "Source branch: ${{ github.head_ref }}"
+          branch_name=${{ github.head_ref }}
+          echo "Branch name: $branch_name"
+          result=$(gh api /repos/samsonites89/gha-test/branches/$branch_name 2>&1)
+          echo "API result: $result"
+          if [[ "$result" != *"Branch not found"* ]]
+          then
+            echo "Branch $branch_name exists"
+            echo "::set-output name=branch_exists::true"
+          else
+            echo "Branch $branch_name does not exist"
+            echo "::set-output name=branch_exists::false"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.PA_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+
       - uses: mheap/require-checklist-action@v2
-        if: ${{ !startsWith(github.head_ref, 'merge/') }}
+        name: Require FR Checklist
+        if: ${{ steps.check_branch.outputs.branch_exists == 'true' && !startsWith(github.head_ref, 'merge/') }}
         with:
           requireChecklist: true
