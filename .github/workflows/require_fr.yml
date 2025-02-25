@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/require-checklist-action@v2
-        if: ${{ !startsWith(github.head_ref, 'merge/') }}
+        if: ${{ !startsWith(github.head_ref, 'merge/') && !github.event.pull_request.head.repo.branches.includes(github.head_ref) }}
         with:
           requireChecklist: true
